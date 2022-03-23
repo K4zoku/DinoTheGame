@@ -8,12 +8,8 @@ import java.awt.*;
 public class Sky extends InfiniteImageScroll {
 
     public Sky(Image sky) {
-        super(ImageUtilities.toBufferedImage(sky), 0, -1, 0.2f);
+        super(ImageUtilities.toBufferedImage(sky), 0, -1, 1);
         resume();
-    }
-
-    public void setSpeed(float speed) {
-        this.speed = speed;
     }
 
 }

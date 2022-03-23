@@ -37,8 +37,8 @@ public class GameScene extends Scene implements KeyListener {
     private static final float RUN_VELOCITY = 8f;
     private static final Random RANDOM = new Random();
     private static final long SPAWN_INTERVAL = 1050;
-    private static final float GROUND_SCROLL_ACCELERATION = 0.02f;
-    private static final float LANDSCAPE_SCROLL_ACCELERATION = 0.01f;
+    private static final int GROUND_SCROLL_ACCELERATION = 2;
+    private static final int LANDSCAPE_SCROLL_ACCELERATION = 1;
     private final transient Map<String, Image> imageMap;
     private final transient List<GameEntity> entities;
     private final JButton btnStart;
@@ -311,8 +311,8 @@ public class GameScene extends Scene implements KeyListener {
 
     public void play() {
         dino.setState(Dino.State.RUNNING);
-        ground.setSpeed(4f);
-        landscape.setSpeed(2f);
+        ground.setSpeed(4);
+        landscape.setSpeed(2);
         setPlaying(true);
         requestFocusInWindow();
     }
@@ -432,12 +432,13 @@ public class GameScene extends Scene implements KeyListener {
     public void update() {
         if (sky != null) sky.update();
         if (isPlaying()) {
-            if (score % 100 == 0) {
+            int actualScore = Math.round(score);
+            if (actualScore < 10000 && actualScore % 1000 == 0 || actualScore >= 10000 && actualScore % 5000 == 0) {
                 landscape.setSpeed(landscape.getSpeed() + LANDSCAPE_SCROLL_ACCELERATION);
                 ground.setSpeed(ground.getSpeed() + GROUND_SCROLL_ACCELERATION);
             }
             landscape.update();
-            score += ground.getSpeed() / 4;
+            score += ground.getSpeed() / 4f;
             ground.update();
             String scoreStr = String.format("%s: %06d", playerName, Math.round(score));
             if (!highScore.isEmpty()) {
@@ -515,9 +516,8 @@ public class GameScene extends Scene implements KeyListener {
             List<GameEntity> toRemove = new ArrayList<>();
             for (GameEntity entity : entities) {
                 float speed = ground.getSpeed();
-                entity.setX(entity.getX() - Math.round(speed));
-                if (entity instanceof Cactus) {
-                } else if (entity instanceof Pterodactyl) {
+                entity.setX(Math.round(entity.getX() - speed));
+                if (entity instanceof Pterodactyl) {
                     Pterodactyl pterodactyl = (Pterodactyl) entity;
                     speed += PTERODACTYL_SPEED;
                     pterodactyl.setX((int) (pterodactyl.getX() - PTERODACTYL_SPEED));

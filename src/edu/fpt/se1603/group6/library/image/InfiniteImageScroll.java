@@ -6,12 +6,12 @@ import java.awt.image.BufferedImage;
 public class InfiniteImageScroll {
 
     private final BufferedImage image;
-    protected float offset;
+    protected int offset;
     protected int direction;
-    protected float speed;
-    protected float previousSpeed;
+    protected int speed;
+    protected int previousSpeed;
 
-    public InfiniteImageScroll(BufferedImage image, float offset, int direction, float speed) {
+    public InfiniteImageScroll(BufferedImage image, int offset, int direction, int speed) {
         this.image = image;
         this.offset = offset;
         this.direction = direction;
@@ -29,7 +29,7 @@ public class InfiniteImageScroll {
     }
 
     public void update() {
-        offset = (offset + direction * speed);
+        offset += direction * speed;
         if (offset > image.getWidth()) {
             offset = 0;
         } else if (offset < 0) {
@@ -38,7 +38,7 @@ public class InfiniteImageScroll {
     }
 
     public void draw(Graphics2D g2d, int x, int y) {
-        int offsetX = Math.round(offset);
+        int offsetX = offset;
         g2d.drawImage(image, x + offsetX, y, null);
         g2d.drawImage(image, x + offsetX - image.getWidth(), y, null);
     }
@@ -52,19 +52,19 @@ public class InfiniteImageScroll {
         return image.getWidth();
     }
 
-    public void setSpeed(float speed) {
-        this.speed = speed;
-    }
-
-    public float getSpeed() {
+    public int getSpeed() {
         return speed;
     }
 
-    public float getOffset() {
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getOffset() {
         return offset;
     }
 
-    public void setOffset(float offset) {
+    public void setOffset(int offset) {
         this.offset = offset;
     }
 
