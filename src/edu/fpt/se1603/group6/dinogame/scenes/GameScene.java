@@ -157,7 +157,7 @@ public class GameScene extends Scene implements KeyListener {
         leaderboard.setAlignmentX(Component.CENTER_ALIGNMENT);
         leaderboard.setAlignmentY(Component.CENTER_ALIGNMENT);
         fm = leaderboard.getFontMetrics(leaderboard.getFont());
-        leaderboard.setSize(getWidth() / 2, fm.getHeight() * 12);
+        leaderboard.setSize(fm.stringWidth("0") * 40, fm.getHeight() * 12);
         leaderboard.setLocation(getWidth() / 2 - leaderboard.getWidth() / 2, getHeight() / 2 - leaderboard.getHeight() / 2);
         leaderboard.setBackground(Color.LIGHT_GRAY);
         leaderboard.setForeground(Color.BLACK);
