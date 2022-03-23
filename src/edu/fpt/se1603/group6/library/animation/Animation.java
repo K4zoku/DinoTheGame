@@ -71,12 +71,19 @@ public abstract class Animation implements Animatable {
         this.thread = new Thread(() -> {
             while (isRunning()) {
                 long now = System.currentTimeMillis();
-                if (now - lastFrameTime >= frameInterval) {
+                long delta = now - lastFrameTime;
+                if (delta >= frameInterval) {
                     if (!isPause()) {
                         update();
                     }
                     draw();
                     lastFrameTime = now;
+                } else {
+                    try {
+                        Thread.sleep((long) (frameInterval - delta));
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
                 }
             }
         });
