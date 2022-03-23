@@ -405,7 +405,6 @@ public class GameScene extends Scene implements KeyListener {
         if (dino != null) dino.draw(g2d);
         for (GameEntity entity : entities) {
             entity.draw(g2d);
-            g2d.draw(entity.getBounds());
         }
     }
 
@@ -416,8 +415,8 @@ public class GameScene extends Scene implements KeyListener {
         // check if dino is out of bounds
         if (dino.getY() <= 0) {
             dino.setY(0);
-        } else if (dino.getY() > groundTopY - dino.getHeight()) {
-            dino.setY(groundTopY - dino.getHeight());
+        } else if (dino.getY() > groundTopY - dino.getHeight() + 10) {
+            dino.setY(groundTopY - dino.getHeight() + 10);
         }
         if (dino.getX() < 0) {
             dino.setX(0);
@@ -461,7 +460,7 @@ public class GameScene extends Scene implements KeyListener {
                         break;
                     case KeyEvent.VK_UP:
                         // only jump if on the ground
-                        if (dino.getY() == groundTopY - dino.getHeight()) {
+                        if (dino.getY() == groundTopY - dino.getHeight() + 10) {
                             speedY = JUMP_VELOCITY;
                             dino.setState(Dino.State.JUMPING);
                         }
