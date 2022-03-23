@@ -1,3 +1,6 @@
+Dino: 3372
+Kazoku: 2562
+Kazoku: 1803
 Dino: 1000
 Dino: 900
 Dino: 800
@@ -5,6 +8,3 @@ Dino: 700
 Dino: 600
 Dino: 500
 Dino: 400
-Dino: 300
-Dino: 200
-Dino: 100

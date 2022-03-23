@@ -457,14 +457,18 @@ public class GameScene extends Scene implements KeyListener {
                         speedX = -ground.getSpeed();
                         dino.setState(Dino.State.IDLE);
                         break;
+                    case KeyEvent.VK_A:
                     case KeyEvent.VK_LEFT:
                         speedX = -Math.round(RUN_VELOCITY);
                         dino.setState(Dino.State.RUNNING);
                         break;
+                    case KeyEvent.VK_D:
                     case KeyEvent.VK_RIGHT:
                         speedX = Math.round(RUN_VELOCITY);
                         dino.setState(Dino.State.RUNNING);
                         break;
+                    case KeyEvent.VK_SPACE:
+                    case KeyEvent.VK_W:
                     case KeyEvent.VK_UP:
                         // only jump if on the ground
                         if (dino.getY() == groundTopY - dino.getHeight() + 10) {
@@ -472,6 +476,7 @@ public class GameScene extends Scene implements KeyListener {
                             dino.setState(Dino.State.JUMPING);
                         }
                         break;
+                    case KeyEvent.VK_S:
                     case KeyEvent.VK_DOWN:
                         if (dino.getState() != Dino.State.DUCKING) {
                             speedY = DUCK_VELOCITY;
