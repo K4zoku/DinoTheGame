@@ -190,7 +190,9 @@ public class GameScene extends Scene implements KeyListener {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                hideLeaderboard();
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE || e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    hideLeaderboard();
+                }
             }
         });
         add(lbPanel);
@@ -288,9 +290,11 @@ public class GameScene extends Scene implements KeyListener {
         kl.set(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                resetComponents();
-                removeKeyListener(this);
-                removeMouseListener(ma);
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE || e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    resetComponents();
+                    removeKeyListener(this);
+                    removeMouseListener(ma);
+                }
             }
         });
         addMouseListener(ma);
@@ -450,7 +454,7 @@ public class GameScene extends Scene implements KeyListener {
             for (Integer key : heldKeys) {
                 switch (key) {
                     case KeyEvent.VK_SHIFT:
-                        speedX = -Math.round(ground.getSpeed());
+                        speedX = -ground.getSpeed();
                         dino.setState(Dino.State.IDLE);
                         break;
                     case KeyEvent.VK_LEFT:
