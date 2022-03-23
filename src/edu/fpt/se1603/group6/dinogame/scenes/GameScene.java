@@ -7,6 +7,7 @@ import edu.fpt.se1603.group6.dinogame.background.Sky;
 import edu.fpt.se1603.group6.dinogame.entities.Cactus;
 import edu.fpt.se1603.group6.dinogame.entities.Dino;
 import edu.fpt.se1603.group6.dinogame.entities.GameEntity;
+import edu.fpt.se1603.group6.dinogame.entities.Pterodactyl;
 import edu.fpt.se1603.group6.library.image.ImageUtilities;
 import edu.fpt.se1603.group6.library.scene.Scene;
 import edu.fpt.se1603.group6.library.scene.SceneManager;
@@ -375,17 +376,7 @@ public class GameScene extends Scene implements KeyListener {
         dino = new Dino(playerImageMap);
     }
 
-    @Override
-    public void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        if (sky != null) sky.draw(g2d, 0, 0);
-        if (landscape != null) landscape.draw(g2d, 0, getHeight() - landscape.getHeight());
-        if (ground != null) ground.draw(g2d, 0, groundTopY);
-        if (dino != null) dino.draw(g2d);
-        for (GameEntity entity : entities) {
-            entity.draw(g2d);
-        }
-    }
+    private static final float PTERODACTYL_SPEED = 5;
 
     private void checkCollisions() {
         int width = dino.getWidth() / 2;
@@ -403,7 +394,22 @@ public class GameScene extends Scene implements KeyListener {
         }
     }
 
-    private void updatePhysics() {
+    private transient Image[] pterodactylImages;
+
+    @Override
+    public void paintComponent(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        if (sky != null) sky.draw(g2d, 0, 0);
+        if (landscape != null) landscape.draw(g2d, 0, getHeight() - landscape.getHeight());
+        if (ground != null) ground.draw(g2d, 0, groundTopY);
+        if (dino != null) dino.draw(g2d);
+        for (GameEntity entity : entities) {
+            entity.draw(g2d);
+            g2d.draw(entity.getBounds());
+        }
+    }
+
+    private void updatePlayer() {
         dino.setX(dino.getX() + speedX);
         speedY += GRAVITY / 5;
         dino.setY(Math.round(dino.getY() + speedY));
@@ -415,7 +421,9 @@ public class GameScene extends Scene implements KeyListener {
         }
         if (dino.getX() < 0) {
             dino.setX(0);
-            dino.setState(Dino.State.RUNNING);
+            if (dino.getState() != Dino.State.RUNNING || dino.getState() != Dino.State.JUMPING || dino.getState() != Dino.State.DUCKING) {
+                dino.setState(Dino.State.RUNNING);
+            }
         } else if (dino.getX() > getWidth() - dino.getWidth()) {
             dino.setX(getWidth() - dino.getWidth());
         }
@@ -425,64 +433,64 @@ public class GameScene extends Scene implements KeyListener {
     public void update() {
         if (sky != null) sky.update();
         if (isPlaying()) {
-            if (landscape != null) {
-                landscape.update();
-                landscape.setSpeed(landscape.getSpeed() + LANDSCAPE_SCROLL_ACCELERATION);
+            landscape.update();
+            landscape.setSpeed(landscape.getSpeed() + LANDSCAPE_SCROLL_ACCELERATION);
+            score += ground.getSpeed() / 4;
+            ground.setSpeed(ground.getSpeed() + GROUND_SCROLL_ACCELERATION);
+            ground.update();
+            String scoreStr = String.format("%s: %06d", playerName, Math.round(score));
+            if (!highScore.isEmpty()) {
+                scoreStr = String.format("%s \t HI: %06d (%s)", scoreStr, highScore.get(0).getScore(), highScore.get(0).getName());
             }
-            if (ground != null) {
-                ground.update();
-                score += ground.getSpeed() / 3;
-                ground.setSpeed(ground.getSpeed() + GROUND_SCROLL_ACCELERATION);
-                String scoreStr = String.format("%s: %06d", playerName, Math.round(score));
-                if (!highScore.isEmpty()) {
-                    scoreStr = String.format("%s \t HI: %06d (%s)", scoreStr, highScore.get(0).getScore(), highScore.get(0).getName());
-                }
-                lblScore.setText(scoreStr);
-            }
-            if (dino != null) {
-                dino.setState(Dino.State.RUNNING);
-                speedX = 0;
-                for (Integer key : heldKeys) {
-                    switch (key) {
-                        case KeyEvent.VK_SHIFT:
-                            speedX = -Math.round(ground.getSpeed());
-                            dino.setState(Dino.State.IDLE);
-                            break;
-                        case KeyEvent.VK_LEFT:
-                            speedX = -Math.round(RUN_VELOCITY);
-                            dino.setState(Dino.State.RUNNING);
-                            break;
-                        case KeyEvent.VK_RIGHT:
-                            speedX = Math.round(RUN_VELOCITY);
-                            dino.setState(Dino.State.RUNNING);
-                            break;
-                        case KeyEvent.VK_UP:
-                            // only jump if on the ground
-                            if (dino.getY() == groundTopY - dino.getHeight()) {
-                                speedY = JUMP_VELOCITY;
-                                dino.setState(Dino.State.JUMPING);
-                            }
-                            break;
-                        case KeyEvent.VK_DOWN:
-                            if (dino.getState() != Dino.State.DUCKING) {
-                                speedY = DUCK_VELOCITY;
-                                dino.setState(Dino.State.DUCKING);
-                            }
-                            break;
-                        default:
-                            break;
-                    }
+            lblScore.setText(scoreStr);
+            dino.setState(Dino.State.RUNNING);
+            speedX = 0;
+            for (Integer key : heldKeys) {
+                switch (key) {
+                    case KeyEvent.VK_SHIFT:
+                        speedX = -Math.round(ground.getSpeed());
+                        dino.setState(Dino.State.IDLE);
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        speedX = -Math.round(RUN_VELOCITY);
+                        dino.setState(Dino.State.RUNNING);
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        speedX = Math.round(RUN_VELOCITY);
+                        dino.setState(Dino.State.RUNNING);
+                        break;
+                    case KeyEvent.VK_UP:
+                        // only jump if on the ground
+                        if (dino.getY() == groundTopY - dino.getHeight()) {
+                            speedY = JUMP_VELOCITY;
+                            dino.setState(Dino.State.JUMPING);
+                        }
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        if (dino.getState() != Dino.State.DUCKING) {
+                            speedY = DUCK_VELOCITY;
+                            dino.setState(Dino.State.DUCKING);
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
-            updatePhysics();
+            updatePlayer();
             checkCollisions();
             if (dino.getState() == Dino.State.DEAD) {
                 setPlaying(false);
                 landscape.pause();
                 ground.pause();
+                for (GameEntity entity : entities) {
+                    if (entity instanceof Pterodactyl) {
+                        ((Pterodactyl) entity).stop();
+                    }
+                }
                 restart();
                 return;
             }
+
             long now = System.currentTimeMillis();
             if (now - lastSpawn > SPAWN_INTERVAL) {
                 lastSpawn = now;
@@ -498,13 +506,25 @@ public class GameScene extends Scene implements KeyListener {
                 } else if (random <= 500) {
                     spawnCactus(getWidth());
                 }
+                if (score >= 1000 && randomInt(0, 1000) <= 100) {
+                    spawnPterodactyl(randomInt(100, groundTopY - 100));
+                }
             }
+
             List<GameEntity> toRemove = new ArrayList<>();
             for (GameEntity entity : entities) {
                 if (entity instanceof Cactus) {
                     entity.setX(entity.getX() - Math.round(ground.getSpeed()));
-                    if (entity.getX() < -entity.getWidth()) {
-                        toRemove.add(entity);
+                } else if (entity instanceof Pterodactyl) {
+                    float speed = Math.round(ground.getSpeed()) + PTERODACTYL_SPEED;
+                    entity.setX((int) (entity.getX() - speed));
+                    Pterodactyl pterodactyl = (Pterodactyl) entity;
+                    pterodactyl.setFrameRate(speed / 2f);
+                }
+                if (entity.getX() < -entity.getWidth()) {
+                    toRemove.add(entity);
+                    if (entity instanceof Pterodactyl) {
+                        ((Pterodactyl) entity).stop();
                     }
                 }
             }
@@ -514,6 +534,19 @@ public class GameScene extends Scene implements KeyListener {
             if (ground != null) ground.update();
             if (landscape != null) landscape.update();
         }
+    }
+
+    private void initPterodactyl() {
+        BufferedImage pterodactylImage = toBufferedImage(scaleImage(imageMap.get("pterodactyl"), SCALE));
+        pterodactylImages = splitImageX(pterodactylImage, 2);
+    }
+
+    private void spawnPterodactyl(int y) {
+        Pterodactyl pterodactyl = new Pterodactyl(pterodactylImages);
+        pterodactyl.setX(getWidth());
+        pterodactyl.setY(y);
+        pterodactyl.start();
+        entities.add(pterodactyl);
     }
 
     private void initCactus() {
@@ -544,6 +577,7 @@ public class GameScene extends Scene implements KeyListener {
             initPlayer();
             initComponents();
             initCactus();
+            initPterodactyl();
             initialized = true;
         }
         resetComponents();
