@@ -1,8 +1,8 @@
-package edu.fpt.se1603.group6.dino.scenes;
+package edu.fpt.se1603.group6.dinogame.scenes;
 
-import edu.fpt.se1603.group6.image.ImageUtilities;
-import edu.fpt.se1603.group6.scene.Scene;
-import edu.fpt.se1603.group6.scene.SceneManager;
+import edu.fpt.se1603.group6.library.image.ImageUtilities;
+import edu.fpt.se1603.group6.library.scene.Scene;
+import edu.fpt.se1603.group6.library.scene.SceneManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

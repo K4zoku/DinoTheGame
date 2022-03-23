@@ -1,4 +1,4 @@
-package edu.fpt.se1603.group6.animation;
+package edu.fpt.se1603.group6.library.animation;
 
 public interface Animatable {
 

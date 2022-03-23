@@ -1,4 +1,4 @@
-package edu.fpt.se1603.group6.scene;
+package edu.fpt.se1603.group6.library.scene;
 
 import javax.swing.*;
 import java.util.ArrayList;

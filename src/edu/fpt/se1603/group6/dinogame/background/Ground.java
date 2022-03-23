@@ -1,7 +1,7 @@
-package edu.fpt.se1603.group6.dino.background;
+package edu.fpt.se1603.group6.dinogame.background;
 
-import edu.fpt.se1603.group6.dino.InfiniteImageScroll;
-import edu.fpt.se1603.group6.image.ImageUtilities;
+import edu.fpt.se1603.group6.library.image.ImageUtilities;
+import edu.fpt.se1603.group6.library.image.InfiniteImageScroll;
 
 import java.awt.*;
 

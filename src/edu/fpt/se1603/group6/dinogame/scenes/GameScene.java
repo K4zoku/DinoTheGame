@@ -1,15 +1,15 @@
-package edu.fpt.se1603.group6.dino.scenes;
+package edu.fpt.se1603.group6.dinogame.scenes;
 
-import edu.fpt.se1603.group6.dino.GameEntity;
-import edu.fpt.se1603.group6.dino.Score;
-import edu.fpt.se1603.group6.dino.background.Ground;
-import edu.fpt.se1603.group6.dino.background.Landscape;
-import edu.fpt.se1603.group6.dino.background.Sky;
-import edu.fpt.se1603.group6.dino.entities.Cactus;
-import edu.fpt.se1603.group6.dino.entities.Dino;
-import edu.fpt.se1603.group6.image.ImageUtilities;
-import edu.fpt.se1603.group6.scene.Scene;
-import edu.fpt.se1603.group6.scene.SceneManager;
+import edu.fpt.se1603.group6.dinogame.GameEntity;
+import edu.fpt.se1603.group6.dinogame.Score;
+import edu.fpt.se1603.group6.dinogame.background.Ground;
+import edu.fpt.se1603.group6.dinogame.background.Landscape;
+import edu.fpt.se1603.group6.dinogame.background.Sky;
+import edu.fpt.se1603.group6.dinogame.entities.Cactus;
+import edu.fpt.se1603.group6.dinogame.entities.Dino;
+import edu.fpt.se1603.group6.library.image.ImageUtilities;
+import edu.fpt.se1603.group6.library.scene.Scene;
+import edu.fpt.se1603.group6.library.scene.SceneManager;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -23,8 +23,8 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static edu.fpt.se1603.group6.dino.DinoGame.FONT;
-import static edu.fpt.se1603.group6.image.ImageUtilities.*;
+import static edu.fpt.se1603.group6.dinogame.DinoGame.FONT;
+import static edu.fpt.se1603.group6.library.image.ImageUtilities.*;
 import static javax.swing.JFrame.setDefaultLookAndFeelDecorated;
 
 public class GameScene extends Scene implements KeyListener {
@@ -45,7 +45,7 @@ public class GameScene extends Scene implements KeyListener {
     private final JLabel lblErrorFeedback;
     private final JLabel lblPlayerName;
     private final JLabel lblScore;
-    private transient List<Score> highScore;
+    private final transient List<Score> highScore;
     private final Set<Integer> heldKeys = new ConcurrentSkipListSet<>();
     private transient Sky sky;
     private transient Landscape landscape;

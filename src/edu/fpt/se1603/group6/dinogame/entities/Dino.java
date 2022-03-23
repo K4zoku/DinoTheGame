@@ -1,7 +1,7 @@
-package edu.fpt.se1603.group6.dino.entities;
+package edu.fpt.se1603.group6.dinogame.entities;
 
-import edu.fpt.se1603.group6.dino.GameEntity;
-import edu.fpt.se1603.group6.image.AnimatedImage;
+import edu.fpt.se1603.group6.dinogame.GameEntity;
+import edu.fpt.se1603.group6.library.image.AnimatedImage;
 
 import java.awt.*;
 import java.util.EnumMap;

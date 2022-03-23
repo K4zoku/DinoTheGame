@@ -1,6 +1,6 @@
-package edu.fpt.se1603.group6.dino.entities;
+package edu.fpt.se1603.group6.dinogame.entities;
 
-import edu.fpt.se1603.group6.dino.GameEntity;
+import edu.fpt.se1603.group6.dinogame.GameEntity;
 
 import java.awt.*;
 

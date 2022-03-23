@@ -1,4 +1,4 @@
-package edu.fpt.se1603.group6.dino;
+package edu.fpt.se1603.group6.dinogame;
 
 import java.awt.*;
 

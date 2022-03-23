@@ -1,8 +1,8 @@
-package edu.fpt.se1603.group6.image;
+package edu.fpt.se1603.group6.library.image;
 
-import edu.fpt.se1603.group6.animation.Animatable;
-import edu.fpt.se1603.group6.animation.Animation;
-import edu.fpt.se1603.group6.animation.SimpleAnimation;
+import edu.fpt.se1603.group6.library.animation.Animatable;
+import edu.fpt.se1603.group6.library.animation.Animation;
+import edu.fpt.se1603.group6.library.animation.SimpleAnimation;
 
 import java.awt.*;
 

@@ -1,4 +1,4 @@
-package edu.fpt.se1603.group6.image;
+package edu.fpt.se1603.group6.library.image;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

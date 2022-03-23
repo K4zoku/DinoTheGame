@@ -1,9 +1,9 @@
-package edu.fpt.se1603.group6.dino;
+package edu.fpt.se1603.group6.dinogame;
 
-import edu.fpt.se1603.group6.dino.scenes.GameScene;
-import edu.fpt.se1603.group6.dino.scenes.LoadingScene;
-import edu.fpt.se1603.group6.scene.Scene;
-import edu.fpt.se1603.group6.scene.SceneManager;
+import edu.fpt.se1603.group6.dinogame.scenes.GameScene;
+import edu.fpt.se1603.group6.dinogame.scenes.LoadingScene;
+import edu.fpt.se1603.group6.library.scene.Scene;
+import edu.fpt.se1603.group6.library.scene.SceneManager;
 import resources.ResourceGetter;
 
 import javax.swing.*;
@@ -12,8 +12,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.font.TextAttribute;
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -86,7 +88,7 @@ public class DinoGame extends JFrame {
         setDefaultLookAndFeelDecorated(true);
     }
 
-    private List<Score> highScores = new ArrayList<>();
+    private final List<Score> highScores = new ArrayList<>();
     private static final File HISCORE_FILE = new File("highscores.txt");
 
     private void save() {
