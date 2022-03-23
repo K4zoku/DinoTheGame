@@ -1,7 +1,5 @@
 package edu.fpt.se1603.group6.dinogame.entities;
 
-import edu.fpt.se1603.group6.dinogame.GameEntity;
-
 import java.awt.*;
 
 public class Cactus extends GameEntity {

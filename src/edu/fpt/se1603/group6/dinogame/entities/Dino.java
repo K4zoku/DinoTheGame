@@ -1,6 +1,5 @@
 package edu.fpt.se1603.group6.dinogame.entities;
 
-import edu.fpt.se1603.group6.dinogame.GameEntity;
 import edu.fpt.se1603.group6.library.image.AnimatedImage;
 
 import java.awt.*;

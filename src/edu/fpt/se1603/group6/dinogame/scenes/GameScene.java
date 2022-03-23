@@ -1,12 +1,12 @@
 package edu.fpt.se1603.group6.dinogame.scenes;
 
-import edu.fpt.se1603.group6.dinogame.GameEntity;
 import edu.fpt.se1603.group6.dinogame.Score;
 import edu.fpt.se1603.group6.dinogame.background.Ground;
 import edu.fpt.se1603.group6.dinogame.background.Landscape;
 import edu.fpt.se1603.group6.dinogame.background.Sky;
 import edu.fpt.se1603.group6.dinogame.entities.Cactus;
 import edu.fpt.se1603.group6.dinogame.entities.Dino;
+import edu.fpt.se1603.group6.dinogame.entities.GameEntity;
 import edu.fpt.se1603.group6.library.image.ImageUtilities;
 import edu.fpt.se1603.group6.library.scene.Scene;
 import edu.fpt.se1603.group6.library.scene.SceneManager;
