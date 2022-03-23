@@ -403,9 +403,11 @@ public class GameScene extends Scene implements KeyListener {
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        if (sky != null) sky.draw(g2d, 0, 0);
-        if (landscape != null) landscape.draw(g2d, 0, getHeight() - landscape.getHeight());
-        if (ground != null) ground.draw(g2d, 0, groundTopY);
+        if (sky != null) {
+            sky.draw(g2d, 0, 0);
+            if (landscape != null) landscape.draw(g2d, 0, sky.getHeight() - landscape.getHeight());
+            if (ground != null) ground.draw(g2d, 0, groundTopY);
+        }
         if (dino != null) dino.draw(g2d);
         for (GameEntity entity : entities) {
             entity.draw(g2d);
