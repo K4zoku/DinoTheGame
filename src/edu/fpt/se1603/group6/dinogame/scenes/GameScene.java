@@ -39,6 +39,7 @@ public class GameScene extends Scene implements KeyListener {
     private static final int GROUND_SCROLL_ACCELERATION = 2;
     private static final int LANDSCAPE_SCROLL_ACCELERATION = 1;
     private static final float PTERODACTYL_SPEED = 5;
+
     private final transient Map<String, Image> imageMap;
     private final transient List<GameEntity> entities;
     private final JButton btnStart;
