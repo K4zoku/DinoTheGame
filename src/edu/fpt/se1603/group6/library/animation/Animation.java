@@ -10,16 +10,10 @@ public abstract class Animation implements Animatable {
     private float frameInterval;
     private long lastFrameTime;
 
-    public Animation(float frameRate) {
+    protected Animation(float frameRate) {
         this.frameRate = frameRate;
         this.frameInterval = 1000f / frameRate;
     }
-
-    @Override
-    public abstract void update();
-
-    @Override
-    public abstract void draw();
 
     @Override
     public boolean isRunning() {
@@ -69,20 +63,22 @@ public abstract class Animation implements Animatable {
         }
         setRunning(true);
         this.thread = new Thread(() -> {
-            while (isRunning()) {
-                long now = System.currentTimeMillis();
-                long delta = now - lastFrameTime;
-                if (delta >= frameInterval) {
-                    if (!isPause()) {
-                        update();
-                    }
-                    draw();
-                    lastFrameTime = now;
-                } else {
-                    try {
-                        Thread.sleep((long) (frameInterval - delta));
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
+            synchronized (this) {
+                while (isRunning()) {
+                    long now = System.currentTimeMillis();
+                    long delta = now - lastFrameTime;
+                    if (delta >= frameInterval) {
+                        if (!isPause()) {
+                            update();
+                        }
+                        draw();
+                        lastFrameTime = now;
+                    } else {
+                        try {
+                            Thread.sleep((long) (frameInterval - delta));
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
                     }
                 }
             }
